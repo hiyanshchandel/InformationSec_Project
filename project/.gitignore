@@ -1,0 +1,7 @@
+data/
+models/
+PDF/
+test/
+**/__pycache__/*
+*.egg-info/*
+*.pdf

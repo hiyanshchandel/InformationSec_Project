@@ -1,6 +1,0 @@
-data/
-models/
-PDF/
-test/
-superdeepfool/*/__pycache__/*
-*.egg-info/*
