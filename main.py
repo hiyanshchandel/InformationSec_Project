@@ -30,7 +30,16 @@ def main(args, logger):
     logger.info(f"Accuracy of original model: {accuracy_orig}")
     requires_grad_(model, False)
 
-    attacks = SuperDeepFool(model, steps=args.steps, overshoot=args.overshoot, search_iter=args.search_iter, number_of_samples=n_examples, l_norm='L2')
+    attacks = SuperDeepFool(
+        model,
+        steps=args.steps,
+        overshoot=args.overshoot,
+        search_iter=args.search_iter,
+        number_of_samples=n_examples,
+        l_norm='L2',
+        curvature_lambda=args.curvature_lambda,
+        curvature_power_iter=args.curvature_power_iters,
+    )
 
     ls = [attacks]
     for attack in ls:
@@ -72,6 +81,10 @@ if __name__ == '__main__':
                         help='parameter for SuperDeepFool (default: 0.02)')
     parser.add_argument('--search-iter', type=int, default=10, metavar='N',
                         help='number of iterations for the line search of SuperDeepFool (default: 10)')
+    parser.add_argument('--curvature-lambda', type=float, default=0.0, metavar='F',
+                        help='strength of the curvature-aware scaling term (default: 0.0)')
+    parser.add_argument('--curvature-power-iters', type=int, default=1, metavar='N',
+                        help='power iterations used to estimate curvature (default: 1)')
     parser.add_argument('--data-dir', type=str, default='data/torchvision', metavar='PATH',help='path to the dataset (default: data/torchvision)')
     parser.add_argument('--model-dir', type=str, default='models', metavar='PATH',help='path to the model (default: models)')
 

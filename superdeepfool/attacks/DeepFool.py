@@ -114,7 +114,7 @@ class DeepFool(Attack):
         return torch.stack(x_grads).reshape(*y.shape, *x.shape)
     
     def _construct_jacobian_parallel(self, y, x):
-        y = x.repeat(10, 1, 1, 1).detach().requires_grad_()
+        y = x.repeat(y.shape[0], 1, 1, 1).detach().requires_grad_()
         out = self.model(y)
         out2 = out.diag().sum()
         out2.backward()
